@@ -1,19 +1,21 @@
 const Temperatura = require("../models/Temperatura")
 
-const receberTemperatura = (req,res) => {
+const receberTemperatura = async (req,res) => {
 
     const {temperatura} = req.body
 
-    const sensor = new Temperatura(temperatura)
+    
+    const resultado = await Temperatura.criar(temperatura)
 
-    console.log(sensor)
+    res.json(resultado)
+}
 
-    res.json({
-        mensagem:"Temperatura recebida",
-        dados:sensor
-    })
+const listarTemperaturas = async ( req, res) =>{
+    const dados = await Temperatura.listar()
+    res.json(dados)
 }
 
 module.exports = {
-    receberTemperatura
+    receberTemperatura,
+    listarTemperaturas
 }
